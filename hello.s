@@ -1,16 +1,29 @@
-global	_main	; we are declaring a function "main"
-section	.text	; indicates that the code starts here
+;CALL CONVENTIONS:
+;rax ; return value
+;rdi ; 1st argument
+;rsi ; 2nd argument
+;rdx ; 3rd
+;rcx ; 4th
+;r8  ; 5th
 
-_main:
-	mov		rax,0x02000004	;system call for write
-	mov		rdi,1			;moving 1 to rdi
-	mov		rsi, message
-	mov		rdx,14
-	syscall
-	mov		rax,0x02000001	;system call for exit
-	xor		rdi,rdi
-	syscall
 
-section	.data	; 
+SECTION .data
+	x:	.int	19
+	y:	.int	2
+	z:	.int	-1
 
-message:	db	"Hello, World",10
+SECTION .text
+	global _add
+
+_add:
+	movabs	rax, x		;movabs moves a variable into a register rax
+	mov		rax, rbx	;
+
+	movabs	rax, y
+	mov		rcx, rax
+	
+	movabs	rax, z
+	mov		rax, rdx
+
+
+	ret

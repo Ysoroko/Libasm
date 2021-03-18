@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/17 16:15:11 by ysoroko           #+#    #+#              #
-#    Updated: 2021/03/17 17:48:19 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/03/18 14:52:26 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,22 +16,36 @@ OBJS		=	hello.o
 
 NAME		=	libasm.a
 
+FLAGS		=	-Wall -Wextra -Werror
+
 LINK		=	ar rcs
+
+ASM			=	-L. -lasm
+
+INCLUDE		= include/
 
 NASM_LINK	=	ld -macosx_version_min 10.12 -lSYstem
 
 EXECUTABLE	=	a.out
 
+COMPILE		=	nasm -f macho64
+
 all: $(NAME)
 
 compile:
-		@nasm -f macho64 $(SRC)
+		@$(COMPILE) $(SRC)
 
 $(NAME): compile
 		$(LINK) $(NAME) $(OBJS)
 
 run:	compile
-		@$(NASM_LINK) $(OBJS) && ./a.out
+		@$(NASM_LINK) $(OBJS) && ./$(EXECUTABLE); \
+		make fclean
+
+test:	$(NAME)
+		gcc $(ASM) $(FLAGS) $(NAME) main.c && ./$(EXECUTABLE); \
+		make fclean
+
 
 clean:
 		@rm -rf $(OBJS)
