@@ -6,13 +6,13 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/17 16:15:11 by ysoroko           #+#    #+#              #
-#    Updated: 2021/03/18 14:52:26 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/03/18 15:15:29 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC			=	hello.s
+SRC			=	ft_strlen.s
 
-OBJS		=	hello.o
+OBJS		=	ft_strlen.o
 
 NAME		=	libasm.a
 

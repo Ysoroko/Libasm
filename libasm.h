@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:24:50 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/18 14:02:56 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/18 15:14:22 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include <stdio.h>
 
-extern int	add(int x, int y);
+int ft_strlen(char *str);
 
 #endif
