@@ -6,13 +6,14 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/17 16:15:11 by ysoroko           #+#    #+#              #
-#    Updated: 2021/03/18 15:15:29 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/03/18 18:04:44 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC			=	ft_strlen.s
+SRC			=	ft_strlen.s \
+				ft_strcmp.s
 
-OBJS		=	ft_strlen.o
+OBJS		=	$(SRC:.s=.o)
 
 NAME		=	libasm.a
 
@@ -22,30 +23,22 @@ LINK		=	ar rcs
 
 ASM			=	-L. -lasm
 
-INCLUDE		= include/
-
-NASM_LINK	=	ld -macosx_version_min 10.12 -lSYstem
-
 EXECUTABLE	=	a.out
 
 COMPILE		=	nasm -f macho64
 
+# Rule to compile .s files into .o files
+.s.o:
+	$(COMPILE) $<
+
 all: $(NAME)
 
-compile:
-		@$(COMPILE) $(SRC)
-
-$(NAME): compile
+$(NAME): $(OBJS)
 		$(LINK) $(NAME) $(OBJS)
-
-run:	compile
-		@$(NASM_LINK) $(OBJS) && ./$(EXECUTABLE); \
-		make fclean
 
 test:	$(NAME)
 		gcc $(ASM) $(FLAGS) $(NAME) main.c && ./$(EXECUTABLE); \
 		make fclean
-
 
 clean:
 		@rm -rf $(OBJS)

@@ -1,9 +1,9 @@
-;int	ft_strlen(char *str)
+;Prototype in C: [int	ft_strlen(char *str)]
 
-;rax	=	return value
-;rdi	=	first argument
+;rax	=	return value registry
+;rdi	=	first argument registry
 
-;[ebx]	=	same as *ebx in C
+;[rdi]	=	same as *rdi in C
 
 global	_ft_strlen
 
@@ -20,7 +20,7 @@ _count:
 	jmp		_count				;jump back to the start of _count
 
 _null_string:
-	ret			;returns rax (which is currently equals to 0)
+	ret			;returns rax (which is currently equal to 0)
 
 _reached_the_end:
-	ret			;returns rax (which is currently equals to strlen)
+	ret			;returns rax (which is currently equal to strlen)
