@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/19 16:05:25 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/19 16:16:07 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,33 +128,27 @@ static void	ft_strcmp_tests(char *l, char *a, char *b)
 	ft_print_function_start("FT_STRCMP");
 	s = strcmp("", "");
 	f = ft_strcmp("", "");
-	printf("%-15s %-9s [%5d] %-9s [%5d]", "[EMPTY][EMPTY]:", x, s,
-														y, f);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[EMPTY][EMPTY]:", x, s, y, f);
 	ft_compare_results("int", 0, 0, s, f);
 	s = strcmp("", b);
 	f = ft_strcmp("", b);
-	printf("%-15s %-9s [%5d] %-9s [%5d]", "[EMPTY][o_O]:", x, s,
-														y, f);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[EMPTY][o_O]:", x, s, y, f);
 	ft_compare_results("int", 0, 0, s, f);
 	s = strcmp(a, "");
 	f = ft_strcmp(a, "");
-	printf("%-15s %-9s [%5d] %-9s [%5d]", "[!][EMPTY]:", x, s,
-														y, f);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[!][EMPTY]:", x, s, y, f);
 	ft_compare_results("int", 0, 0, s, f);
 	s = strcmp(l, l);
 	f = ft_strcmp(l, l);
-	printf("%-15s %-9s [%5d] %-9s [%5d]", "[LONG][LONG]:", x, s,
-														y, f);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[LONG][LONG]:", x, s, y, f);
 	ft_compare_results("int", 0, 0, s, f);
 	s = strcmp(a, b);
 	f = ft_strcmp(a, b);
-	printf("%-15s %-9s [%5d] %-9s [%5d]", "[!][o_O]:", x, s,
-														y, f);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[!][o_O]:", x, s, y, f);
 	ft_compare_results("int", 0, 0, s, f);
 	s = strcmp(b, a);
 	f = ft_strcmp(b, a);
-	printf("%-15s %-9s [%5d] %-9s [%5d]", "[o_O][!]:", x, s,
-														y, f);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[o_O][!]:", x, s, y, f);
 	ft_compare_results("int", 0, 0, s, f);
 	ft_print_end_line();
 	free(x);
@@ -233,7 +227,6 @@ static void	ft_run_tests(char *l, char *a, char *b)
 	ft_strlen_tests(l, a, b);
 	ft_strcmp_tests(l, a, b);
 	ft_strcpy_tests(l, a, b);
-	
 }
 
 int			main(void)
