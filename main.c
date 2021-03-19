@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/18 17:51:33 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/19 11:11:01 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 static void	ft_initialize_strings(char **l_str, char **str_a, char **str_b)
 {
-	*l_str = strcpy("Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
+	*l_str = strdup("Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
 					Sed non risus. Suspendisse lectus tortor \
 					,dignissim sit amet, adipiscing nec, ultricies sed, dolor \
 					Cras elementum ultrices diam. \
@@ -61,24 +61,24 @@ static void	ft_initialize_strings(char **l_str, char **str_a, char **str_b)
 					luctus et ultrices posuere cubilia Curae \
 					Aliquam nibh. \
 					Mauris ac mauris sed pede pellentesque fermentum. \
-					Maecenas adipiscing ante non diam sodales hendrerit.", *l_str);
-	*str_a = strcpy("!", *str_a);
-	*str_b = strcpy("o_O", *str_b);
+					Maecenas adipiscing ante non diam sodales hendrerit.");
+	*str_a = strdup("!");
+	*str_b = strdup("o_O");
 }
 
 static void	ft_str_tests(char *l, char *a, char *b)
 {
 	printf("\n\n\n");
 	printf(BOLDCYAN);
-	printf("--------------------------FT_STRLEN--------------------------\n");
+	printf("--------------------------FT_STRLEN--------------------------\n\n");
 	printf(COLOR_RESET);
-	printf("[EMPTY]: strlen: [%lu] ft_strlen[%d]\n", strlen(""), ft_strlen(""));
-	printf("[!]: strlen: [%lu] ft_strlen[%d]\n", strlen(a), ft_strlen(a));
-	printf("[o_O]: strlen: [%lu] ft_strlen[%d]\n", strlen(b), ft_strlen(b));
-	printf("[LONG]: strlen: [%lu] ft_strlen[%d]\n", strlen(l), ft_strlen(l));
+	//printf("[EMPTY]: strlen: [%lu] ft_strlen[%lu]\n", strlen(""), ft_strlen(""));
+	printf("[!]: strlen: [%lu] ft_strlen[%lu]\n", strlen(a), ft_strlen(a));
+	printf("[o_O]: strlen: [%lu] ft_strlen[%lu]\n", strlen(b), ft_strlen(b));
+	printf("[LONG]: strlen: [%lu] ft_strlen[%lu]\n", strlen(l), ft_strlen(l));
 	printf(BOLDCYAN);
-	printf("------------------------------------------------------------\n\n\n");
-	printf("--------------------------FT_STRCMP--------------------------\n");
+	printf("\n------------------------------------------------------------\n\n\n");
+	printf("--------------------------FT_STRCMP--------------------------\n\n");
 	printf(COLOR_RESET);
 	printf("[EMPTY][EMPTY]: strcmp: [%d] ft_strcmp[%d]\n", strcmp("", ""),
 														ft_strcmp("", ""));
@@ -92,7 +92,8 @@ static void	ft_str_tests(char *l, char *a, char *b)
 														ft_strcmp(a, b));
 	printf("[o_O][!]: strcmp: [%d] ft_strcmp[%d]\n", strcmp(b, a),
 														ft_strcmp(b, a));
-	printf("------------------------------------------------------------\n\n\n");
+	printf(BOLDCYAN);
+	printf("\n------------------------------------------------------------\n\n\n");
 }
 
 int main(void)

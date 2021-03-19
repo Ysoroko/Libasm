@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:24:50 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/18 17:48:14 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/19 10:12:07 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 # include <stdio.h>
 # include <string.h>
 
-int ft_strlen(char *str);
-int	ft_strcmp(char *a, char *b);
-
+size_t	ft_strlen(char *str);
+int		ft_strcmp(char *a, char *b);
 
 /*
 ** COLORS

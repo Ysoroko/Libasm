@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/17 16:15:11 by ysoroko           #+#    #+#              #
-#    Updated: 2021/03/18 18:04:44 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/03/19 10:14:26 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,10 @@ $(NAME): $(OBJS)
 
 test:	$(NAME)
 		gcc $(ASM) $(FLAGS) $(NAME) main.c && ./$(EXECUTABLE); \
+		make fclean
+
+wtest: $(NAME)
+		gcc $(ASM) $(NAME) main.c && ./$(EXECUTABLE); \
 		make fclean
 
 clean:
