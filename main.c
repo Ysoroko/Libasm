@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/19 16:16:07 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/19 16:23:57 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static void	ft_strlen_tests(char *l, char *a, char *b)
 	char	*x;
 	char	*y;
 
-	if (!(x = strdup("strlen")) || !(y = strdup("ft_strlen")))
+	if (!(x = strdup("strlen: ")) || !(y = strdup("ft_strlen: ")))
 		exit(EXIT_FAILURE);
 	ft_print_function_start("FT_STRLEN");
 	s = strlen("");
@@ -123,7 +123,7 @@ static void	ft_strcmp_tests(char *l, char *a, char *b)
 	char	*x;
 	char	*y;
 
-	if (!(x = strdup("strcmp")) || !(y = strdup("ft_strcmp")))
+	if (!(x = strdup("strcmp: ")) || !(y = strdup("ft_strcmp: ")))
 		exit(EXIT_FAILURE);
 	ft_print_function_start("FT_STRCMP");
 	s = strcmp("", "");

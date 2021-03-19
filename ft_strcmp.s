@@ -5,8 +5,7 @@
 ;rdi	=	first argument registry
 ;rsi	=	second argument registry
 
-;rcx	=	store value here
-;rdx	=	store value here
+;r8, r9, 10	=	scratch registers, used to store temporary data
 
 ;[rdi]	=	same as *rdi in C
 
@@ -14,40 +13,37 @@ global	_ft_strcmp
 
 _ft_strcmp:
 	xor		rax, rax					;rax = 0
-	xor		rcx, rcx
-	xor		rdx, rdx
-	cmp		rdi, 0						;compare 1st argument to a NULL pointer
-	je		_null_string				;if 1st argument is a NULL pointer, jump to null_string function
-	cmp		rsi, 0						;compare 2nd argument to a NULL pointer
-	je		_null_string				;if 2nd argument is a NULL pointer, jump to null_string function
+	cmp		rdi, 0						;if (!str_a)
+	je		_return_zero				;return (0);
+	cmp		rsi, 0						;if (!str_b)
+	je		_return_zero				;return (0);
+	xor		r10, r10					;r10 = 0 (we use it as 'i' index here)
 	jmp		_compare					;jump to compare function
 
 _compare:
-	mov		rcx, [rdi + rax]			;store the value of rdi[r10] in r8
-	mov		rdx, [rsi + rax]			;store the value of rsi[r10] in r9
-	cmp		rcx, byte 0					;if (!r8[i])
-	je		_compare_chars				;end_of_string()
-	cmp		rdx, byte 0					;if (!r9[i])
-	je		_compare_chars				;end_of_string()
-	cmp		rcx, rdx					;if (r8[i] != r9[i])
-	jne		_compare_chars				;end_of_string()
-	inc		rax							;++
+	mov		r8b, [rdi + r10]			;store the value of str_a[i] in r8
+	mov		r9b, [rsi + r10]			;store the value of str_b[i] in r9
+	cmp		r8b, byte 0					;if (!str_a[i])
+	je		_compare_chars				;compare_chars()
+	cmp		r9b, byte 0					;if (!str_b[i])
+	je		_compare_chars				;compare_chars()
+	cmp		r8b, r9b					;if (str_a[i] != str_b[i])
+	jne		_compare_chars				;compare_chars()
+	inc		r10							;i++
 	jmp		_compare					;jump back to the start of _count
 
-_null_string:
+_return_zero:
 	ret									;returns rax (which is currently equal to 0)
 
 _compare_chars:
-	xor		rax, rax
-	cmp		rcx, rdx
-	je		_null_string
-	jg		_return_one
-	jl		_return_minus_one
+	je		_return_zero				;if (str_a[i] == str_b[i]) { return (0); }
+	jg		_return_one					;if (str_a[i] > str_b[i]) { return (1); }
+	jl		_return_minus_one			;if (str_a[i] < str_b[i]) { return (-1); }
 	
 _return_one:
-	inc		rax
-	ret
+	inc		rax							;rax++
+	ret									;return rax
 
 _return_minus_one:
-	dec		rax
-	ret
+	dec		rax							;rax--
+	ret									;return rax

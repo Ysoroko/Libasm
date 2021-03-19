@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/17 16:15:11 by ysoroko           #+#    #+#              #
-#    Updated: 2021/03/19 14:16:21 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/03/19 17:05:46 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,15 +30,15 @@ COMPILE		=	nasm -f macho64
 
 # Rule to compile .s files into .o files
 .s.o:
-	$(COMPILE) $<
+	@$(COMPILE) $<
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-		$(LINK) $(NAME) $(OBJS)
+		@$(LINK) $(NAME) $(OBJS)
 
 test:	$(NAME)
-		gcc $(ASM) $(FLAGS) $(NAME) main.c && ./$(EXECUTABLE); \
+		@gcc $(ASM) $(FLAGS) $(NAME) main.c && ./$(EXECUTABLE); \
 		make fclean
 
 wtest: $(NAME)
@@ -54,4 +54,4 @@ fclean:	clean
 
 re:		fclean all
 
-.PHONY: all clean fclean re run
+.PHONY: all clean fclean re test
