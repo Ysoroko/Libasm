@@ -6,42 +6,202 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/19 11:11:01 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/19 16:05:25 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
 
 /*
-** CALL CONVENTIONS:
-**
-** rax ; return value
-**
-** rdi ; 1st argument
-** rsi ; 2nd argument
-** rdx ; 3rd
-** rcx ; 4th
-** r8  ; 5th
+** FT_PRINT_FUNCTION_START
+** This function will print the function name in a line full of '-' characters
+** BOLDCYAN color is used
+** This is used purely as a cosmetic separator
 */
 
+static void	ft_print_function_start(const char *f)
+{
+	printf(BOLDCYAN);
+	printf("\n\n\n--------------------------");
+	printf(BOLDMAGENTA);
+	printf(" %s ", f);
+	printf(BOLDCYAN);
+	printf("------------------------\n\n");
+	printf(COLOR_RESET);
+}
+
+static void	ft_print_result(int n)
+{
+	if (n)
+	{
+		printf(BOLDGREEN);
+		printf("\t%s\n", "[OK]");
+		printf(COLOR_RESET);
+	}
+	else
+	{
+		printf(BOLDRED);
+		printf("\t%s\n", "[KO]");
+		printf(COLOR_RESET);
+	}
+}
 /*
-** add/sub/mul/imul/div/idiv ; aritmetic (IMUL = signed, MUL = signed)
-** inc/dec ; increment/decrement
-** push ; write a value to the stack
-** pop ; restore whatever is on the top of the stack into a register
-** xchg ; exchange values of two variables
+** FT_PRINT_END_LINE
+** This function will print a line full of '-' characters
+** This is used purely as a cosmetic separator
 */
 
+static void	ft_print_end_line(void)
+{
+	printf(BOLDCYAN);
+	printf("\n-------------------------------");
+	printf("------------------------------");
+	printf(COLOR_RESET);
+}
+
+static void	ft_compare_results(char *type, char *a, char *b, int c, int d)
+{
+	if (!strcmp(type, "string"))
+	{
+		if (!(strcmp(a, b)))
+			ft_print_result(1);
+		else
+			ft_print_result(0);
+	}
+	else if (!(strcmp(type, "int")))
+	{
+		if (c == d)
+			ft_print_result(1);
+		else
+			ft_print_result(0);
+	}
+}
+
 /*
-** OTHER USEFUL STUFF
-** call ; calls another function (unlike jump it continues 
-**			where it left off after executing the function)
-** [ebx] ;same as *ebx in C
+** FT_STRLEN_TESTS
+** This function will call and print all the tests related to ft_strlen
+*/
+
+static void	ft_strlen_tests(char *l, char *a, char *b)
+{
+	size_t	s;
+	size_t	f;
+	char	*x;
+	char	*y;
+
+	if (!(x = strdup("strlen")) || !(y = strdup("ft_strlen")))
+		exit(EXIT_FAILURE);
+	ft_print_function_start("FT_STRLEN");
+	s = strlen("");
+	f = ft_strlen("");
+	printf("%-15s %-9s [%5lu] %-9s [%5lu]", "[EMPTY]:", x, s, y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	s = strlen(a);
+	f = ft_strlen(a);
+	printf("%-15s %-9s [%5lu] %-9s [%5lu]", "[!]:", x, s, y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	s = strlen(b);
+	f = ft_strlen(b);
+	printf("%-15s %-9s [%5lu] %-9s [%5lu]", "[o_O]:", x, s, y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	s = strlen(l);
+	f = ft_strlen(l);
+	printf("%-15s %-9s [%5lu] %-9s [%5lu]", "[LONG]:", x, s, y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	ft_print_end_line();
+}
+
+/*
+** FT_STRCMP_TESTS
+** This function will call and print all the tests related to ft_strcmp
+*/
+
+static void	ft_strcmp_tests(char *l, char *a, char *b)
+{
+	int		s;
+	int		f;
+	char	*x;
+	char	*y;
+
+	if (!(x = strdup("strcmp")) || !(y = strdup("ft_strcmp")))
+		exit(EXIT_FAILURE);
+	ft_print_function_start("FT_STRCMP");
+	s = strcmp("", "");
+	f = ft_strcmp("", "");
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[EMPTY][EMPTY]:", x, s,
+														y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	s = strcmp("", b);
+	f = ft_strcmp("", b);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[EMPTY][o_O]:", x, s,
+														y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	s = strcmp(a, "");
+	f = ft_strcmp(a, "");
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[!][EMPTY]:", x, s,
+														y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	s = strcmp(l, l);
+	f = ft_strcmp(l, l);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[LONG][LONG]:", x, s,
+														y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	s = strcmp(a, b);
+	f = ft_strcmp(a, b);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[!][o_O]:", x, s,
+														y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	s = strcmp(b, a);
+	f = ft_strcmp(b, a);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[o_O][!]:", x, s,
+														y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	ft_print_end_line();
+	free(x);
+	free(y);
+}
+
+/*
+** FT_STRCPY_TESTS
+** This function will call and print all the tests related to ft_strcpy
+*/
+static void	ft_strcpy_tests(char *l, char *a, char *b)
+{
+	char	*s;
+	char	*f;
+	char	*x;
+	char	*y;
+
+	if (!(s = malloc(10000)) || !(f = malloc(10000)) ||
+		(!(x = strdup("strcpy: "))) || (!(y = strdup("ft_strcpy: "))))
+		exit(EXIT_FAILURE);
+	ft_print_function_start("FT_STRCPY");
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[EMPTY]:", x, strcpy(s, ""),
+														y, ft_strcpy(f, ""));
+	ft_compare_results("string", s, f, 0, 0);
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[o_O]:", x, strcpy(s, b),
+														y, ft_strcpy(f, b));
+	ft_compare_results("string", s, f, 0, 0);
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[!]:", x, strcpy(s, a),
+														y, ft_strcpy(f, a));
+	ft_compare_results("string", s, f, 0, 0);
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[LONG]:", x, strcpy(s, l),
+														y, ft_strcpy(f, l));
+	ft_compare_results("string", s, f, 0, 0);
+	ft_print_end_line();
+	free (s);
+	free (f);
+}
+
+
+/*
+** FT_INITIALIZE_STRINGS
+** This function returns a malloc'd duplicate
 */
 
 static void	ft_initialize_strings(char **l_str, char **str_a, char **str_b)
 {
-	*l_str = strdup("Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
+	if (!(*l_str = strdup("Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
 					Sed non risus. Suspendisse lectus tortor \
 					,dignissim sit amet, adipiscing nec, ultricies sed, dolor \
 					Cras elementum ultrices diam. \
@@ -61,48 +221,28 @@ static void	ft_initialize_strings(char **l_str, char **str_a, char **str_b)
 					luctus et ultrices posuere cubilia Curae \
 					Aliquam nibh. \
 					Mauris ac mauris sed pede pellentesque fermentum. \
-					Maecenas adipiscing ante non diam sodales hendrerit.");
-	*str_a = strdup("!");
-	*str_b = strdup("o_O");
+					Maecenas adipiscing ante non diam sodales hendrerit.")) ||
+		!(*str_a = strdup("!")) || !(*str_b = strdup("o_O")))
+		{
+			exit(EXIT_FAILURE);
+		}
 }
 
-static void	ft_str_tests(char *l, char *a, char *b)
+static void	ft_run_tests(char *l, char *a, char *b)
 {
-	printf("\n\n\n");
-	printf(BOLDCYAN);
-	printf("--------------------------FT_STRLEN--------------------------\n\n");
-	printf(COLOR_RESET);
-	//printf("[EMPTY]: strlen: [%lu] ft_strlen[%lu]\n", strlen(""), ft_strlen(""));
-	printf("[!]: strlen: [%lu] ft_strlen[%lu]\n", strlen(a), ft_strlen(a));
-	printf("[o_O]: strlen: [%lu] ft_strlen[%lu]\n", strlen(b), ft_strlen(b));
-	printf("[LONG]: strlen: [%lu] ft_strlen[%lu]\n", strlen(l), ft_strlen(l));
-	printf(BOLDCYAN);
-	printf("\n------------------------------------------------------------\n\n\n");
-	printf("--------------------------FT_STRCMP--------------------------\n\n");
-	printf(COLOR_RESET);
-	printf("[EMPTY][EMPTY]: strcmp: [%d] ft_strcmp[%d]\n", strcmp("", ""),
-														ft_strcmp("", ""));
-	printf("[EMPTY][o_O]: strcmp: [%d] ft_strcmp[%d]\n", strcmp("", b),
-														ft_strcmp("", b));
-	printf("[!][EMPTY]: strcmp: [%d] ft_strcmp[%d]\n", strcmp(a, ""),
-														ft_strcmp(a, ""));
-	printf("[LONG][LONG]: strcmp: [%d] ft_strcmp[%d]\n", strcmp(l, l),
-														ft_strcmp(l, l));
-	printf("[!][o_O]: strcmp: [%d] ft_strcmp[%d]\n", strcmp(a, b),
-														ft_strcmp(a, b));
-	printf("[o_O][!]: strcmp: [%d] ft_strcmp[%d]\n", strcmp(b, a),
-														ft_strcmp(b, a));
-	printf(BOLDCYAN);
-	printf("\n------------------------------------------------------------\n\n\n");
+	ft_strlen_tests(l, a, b);
+	ft_strcmp_tests(l, a, b);
+	ft_strcpy_tests(l, a, b);
+	
 }
 
-int main(void)
+int			main(void)
 {
 	char	*long_string;
 	char	*str_a;
 	char 	*str_b;
 
 	ft_initialize_strings(&long_string, &str_a, &str_b);
-	ft_str_tests(long_string, str_a, str_b);
+	ft_run_tests(long_string, str_a, str_b);
 	return (1);
 }

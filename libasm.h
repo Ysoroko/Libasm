@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:24:50 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/19 10:12:07 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/19 14:40:43 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # include <stdio.h>
 # include <string.h>
+#include <stdlib.h>
 
 size_t	ft_strlen(char *str);
 int		ft_strcmp(char *a, char *b);
+char	*ft_strcpy(char *dest, char *src);
 
 /*
 ** COLORS
@@ -41,3 +43,31 @@ int		ft_strcmp(char *a, char *b);
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
 #endif
+
+
+/*
+** CALL CONVENTIONS:
+**
+** rax ; return value
+**
+** rdi ; 1st argument
+** rsi ; 2nd argument
+** rdx ; 3rd
+** rcx ; 4th
+** r8  ; 5th
+*/
+
+/*
+** add/sub/mul/imul/div/idiv ; aritmetic (IMUL = signed, MUL = signed)
+** inc/dec ; increment/decrement
+** push ; write a value to the stack
+** pop ; restore whatever is on the top of the stack into a register
+** xchg ; exchange values of two variables
+*/
+
+/*
+** OTHER USEFUL STUFF
+** call ; calls another function (unlike jump it continues 
+**			where it left off after executing the function)
+** [ebx] ;same as *ebx in C
+*/
