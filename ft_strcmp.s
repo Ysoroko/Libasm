@@ -13,6 +13,8 @@ global	_ft_strcmp
 
 _ft_strcmp:
 	xor		rax, rax					;rax = 0
+	xor		r8, r8
+	xor		r9, r9
 	cmp		rdi, 0						;if (!str_a)
 	je		_return_zero				;return (0);
 	cmp		rsi, 0						;if (!str_b)
@@ -21,14 +23,15 @@ _ft_strcmp:
 	jmp		_compare					;jump to compare function
 
 _compare:
-	mov		r8b, [rdi + r10]			;store the value of str_a[i] in r8
-	mov		r9b, [rsi + r10]			;store the value of str_b[i] in r9
+	mov		r8b, byte [rdi + r10]			;store the value of str_a[i] in r8d
+	mov		r9b, byte [rsi + r10]			;store the value of rm -rf ~/Library/**.42_cache_bak_**; rm -rf ~/**.42_cache_bak_**; brew cleanupstr_b[i] in r9d
 	cmp		r8b, byte 0					;if (!str_a[i])
 	je		_compare_chars				;compare_chars()
 	cmp		r9b, byte 0					;if (!str_b[i])
 	je		_compare_chars				;compare_chars()
-	cmp		r8b, r9b					;if (str_a[i] != str_b[i])
-	jne		_compare_chars				;compare_chars()
+	sub		r8b, r9b					;if (str_a[i] != str_b[i])
+	cmp		r8b, 0
+	jnz		_compare_chars
 	inc		r10							;i++
 	jmp		_compare					;jump back to the start of _count
 
@@ -36,9 +39,9 @@ _return_zero:
 	ret									;returns rax (which is currently equal to 0)
 
 _compare_chars:
-	je		_return_zero				;if (str_a[i] == str_b[i]) { return (0); }
-	jg		_return_one					;if (str_a[i] > str_b[i]) { return (1); }
-	jl		_return_minus_one			;if (str_a[i] < str_b[i]) { return (-1); }
+	mov		al, r8b						;if (str_a[i] == str_b[i]) { return (0); }
+	ret									;if (str_a[i] > str_b[i]) { return (1); }
+										;if (str_a[i] < str_b[i]) { return (-1); }
 	
 _return_one:
 	inc		rax							;rax++
