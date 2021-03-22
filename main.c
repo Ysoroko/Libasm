@@ -6,11 +6,32 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/19 16:23:57 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/22 14:19:17 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
+
+/*
+** FT_PRINT_header
+** This function will print the function name in a line full of '-' characters
+** BOLDCYAN color is used
+** This is used purely as a cosmetic separator
+*/
+
+static void	ft_print_header(const char *f)
+{
+	printf(BOLDMAGENTA);
+	printf("\n\n\n\n\n\n\n\n\n-------------------------------");
+	printf("------------------------------\n\n");
+	printf(COLOR_RESET);
+	printf(BOLDYELLOW);
+	printf("\t\t  %s \n\n", f);
+	printf(BOLDMAGENTA);
+	printf("-------------------------------");
+	printf("------------------------------");
+	printf(COLOR_RESET);
+}
 
 /*
 ** FT_PRINT_FUNCTION_START
@@ -134,13 +155,29 @@ static void	ft_strcmp_tests(char *l, char *a, char *b)
 	f = ft_strcmp("", b);
 	printf("%-15s %-9s [%5d] %-9s [%5d]", "[EMPTY][o_O]:", x, s, y, f);
 	ft_compare_results("int", 0, 0, s, f);
+	s = strcmp(b, "");
+	f = ft_strcmp(b, "");
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[o_O][EMPTY]:", x, s, y, f);
+	ft_compare_results("int", 0, 0, s, f);
 	s = strcmp(a, "");
 	f = ft_strcmp(a, "");
 	printf("%-15s %-9s [%5d] %-9s [%5d]", "[!][EMPTY]:", x, s, y, f);
 	ft_compare_results("int", 0, 0, s, f);
+	s = strcmp("", a);
+	f = ft_strcmp("", a);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[EMPTY][!]:", x, s, y, f);
+	ft_compare_results("int", 0, 0, s, f);
 	s = strcmp(l, l);
 	f = ft_strcmp(l, l);
 	printf("%-15s %-9s [%5d] %-9s [%5d]", "[LONG][LONG]:", x, s, y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	s = strcmp(l, "");
+	f = ft_strcmp(l, "");
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[LONG][EMPTY]:", x, s, y, f);
+	ft_compare_results("int", 0, 0, s, f);
+	s = strcmp("", l);
+	f = ft_strcmp("", l);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[EMPTY][LONG]:", x, s, y, f);
 	ft_compare_results("int", 0, 0, s, f);
 	s = strcmp(a, b);
 	f = ft_strcmp(a, b);
@@ -224,6 +261,7 @@ static void	ft_initialize_strings(char **l_str, char **str_a, char **str_b)
 
 static void	ft_run_tests(char *l, char *a, char *b)
 {
+	ft_print_header("LIBASM TESTER BY YSOROKO");
 	ft_strlen_tests(l, a, b);
 	ft_strcmp_tests(l, a, b);
 	ft_strcpy_tests(l, a, b);
