@@ -3,14 +3,10 @@ extern	_ft_strcpy
 extern	_malloc
 
 ;Prototype in C: [char	*ft_strdup(const char *src)]
-;Mallocs a new string, copies *src to its address and returns this address
+;Mallocs a new string, copies *src string to its address and returns this address
 
 ;rax	=	return value registry
 ;rdi	=	first argument registry
-
-;r8, r9, 10	=	scratch registers, used to store temporary data
-
-;[rdi]	=	same as *rdi in C
 
 global	_ft_strdup
 
@@ -34,10 +30,10 @@ _allocate_memory:
 	jmp		_copy
 
 ;char	*ft_strcpy(char *dst, const char *src)
-;rdi must be set up to point to the newly allocated string
+;rdi is already set up to point to the newly allocated string
 ;rsi must be retrieved on the stack (see "push" command above)
 _copy:
-	pop		rsi						;retrieve initial rdi value on the stack (rdi = strdup argument)
+	pop		rsi						;retrieve initial rdi value on the stack (rdi = strdup argument) and store it in rsi
 	call	_ft_strcpy				;strcpy((malloc pointer), (strdup argument))
 	ret								;return rax (the return value of strcpy)
 
