@@ -17,19 +17,23 @@ _ft_strcpy:
 	xor	r10, r10				;used for storing src[j]
 	mov	rax, rdi				;store *dest in rax
 	cmp	rdi, 0					;if(!dst)
-	je	_return					;return(NULL)
+	je	_return_dest			;return(NULL)
 	cmp	rsi, 0					;if(!src)
-	je	_return					;return(dst)
+	je	_return_dest			;return(dst)
 	jmp	_copy					;jump to _copy function
 
 _copy:
 	cmp	[rsi + r9], byte 0		;!if(src[j])
-	je	_return					;copy ended, return *dst
+	je	_finish					;copy ended, put a '\0' and return *dest
 	mov	r10, [rsi + r9]			;else{ r10 = src[j]; }
 	mov	[rdi + r8], r10			;dst[i] = r10
 	inc	r8						;i++
 	inc	r9						;j++
 	jmp	_copy					;go back to the start of _copy function
 
-_return:
+_finish:
+	mov	[rdi + r8], byte 0		;dst[j] = '\0'
+	ret							;return (*dest)
+
+_return_dest:
 	ret							;return *dst

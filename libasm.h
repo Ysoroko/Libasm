@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:24:50 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/19 16:30:07 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/22 15:16:26 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 size_t	ft_strlen(char *str);
 int		ft_strcmp(char *a, char *b);
 char	*ft_strcpy(char *dest, char *src);
+char	*ft_strdup(const char *src);
 
 /*
 ** COLORS

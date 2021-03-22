@@ -6,17 +6,15 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/22 14:19:17 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/22 15:32:32 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
 
 /*
-** FT_PRINT_header
-** This function will print the function name in a line full of '-' characters
-** BOLDCYAN color is used
-** This is used purely as a cosmetic separator
+** FT_PRINT_HEADE
+** Simply prints the "LIBASM TESTER" header
 */
 
 static void	ft_print_header(const char *f)
@@ -43,7 +41,7 @@ static void	ft_print_header(const char *f)
 static void	ft_print_function_start(const char *f)
 {
 	printf(BOLDCYAN);
-	printf("\n\n\n--------------------------");
+	printf("\n\n\n\n\n--------------------------");
 	printf(BOLDMAGENTA);
 	printf(" %s ", f);
 	printf(BOLDCYAN);
@@ -220,10 +218,55 @@ static void	ft_strcpy_tests(char *l, char *a, char *b)
 														y, ft_strcpy(f, l));
 	ft_compare_results("string", s, f, 0, 0);
 	ft_print_end_line();
-	free (s);
-	free (f);
+	free(s);
+	free(f);
+	free(x);
+	free(y);
 }
 
+/*
+** FT_STRDUP_TESTS
+** This function will call and print all the tests related to ft_strdup
+*/
+static void	ft_strdup_tests(char *l, char *a, char *b)
+{
+	char	*s;
+	char	*f;
+	char	*x;
+	char	*y;
+
+	if ((!(x = strdup("strdup: "))) || (!(y = strdup("ft_strdup: "))))
+		exit(EXIT_FAILURE);
+	ft_print_function_start("FT_STRDUP");
+	if (!(s = strdup("")) || !((f = ft_strdup(""))))
+		return ;
+	f = ft_strdup("");
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[EMPTY]:", x, s, y, f);
+	ft_compare_results("string", s, f, 0, 0);
+	free(s);
+	free(f);
+	if (!(s = strdup(b)) || !((f = ft_strdup(b))))
+		return ;
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[o_O]:", x, s, y, f);
+	ft_compare_results("string", s, f, 0, 0);
+	free(s);
+	free(f);
+	if (!(s = strdup(a)) || !((f = ft_strdup(a))))
+		return ;
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[!]:", x, s, y, f);
+	ft_compare_results("string", s, f, 0, 0);
+	free(s);
+	free(f);
+	if (!(s = strdup(l)) || !((f = ft_strdup(l))))
+		return ;
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[LONG]:", x, s, y, f);
+	ft_compare_results("string", s, f, 0, 0);
+	ft_print_end_line();
+	free(s);
+	free(f);
+	free(x);
+	free(y);
+}
 
 /*
 ** FT_INITIALIZE_STRINGS
@@ -265,6 +308,7 @@ static void	ft_run_tests(char *l, char *a, char *b)
 	ft_strlen_tests(l, a, b);
 	ft_strcmp_tests(l, a, b);
 	ft_strcpy_tests(l, a, b);
+	ft_strdup_tests(l, a, b);
 }
 
 int			main(void)
