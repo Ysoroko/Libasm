@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/17 16:15:11 by ysoroko           #+#    #+#              #
-#    Updated: 2021/03/23 17:59:28 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/03/23 18:03:58 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ fclean:	clean
 		@rm -rf $(NAME) \
 		@rm -rf $(EXECUTABLE) \
 
-aclean: clean
+aclean: fclean
 		@rm -rf ft_write \
 		@rm -rf write
 

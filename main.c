@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/23 17:59:20 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/23 18:04:37 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ft_print_header(const char *f)
 	printf("------------------------------\n\n");
 	printf(COLOR_RESET);
 	printf(BOLDYELLOW);
-	printf("\t\t  %s \n\n", f);
+	printf("\t\t     %s \n\n", f);
 	printf(BOLDMAGENTA);
 	printf("-------------------------------");
 	printf("------------------------------");
@@ -447,7 +447,7 @@ static void	ft_initialize_strings(char **l_str, char **str_a, char **str_b)
 
 static void	ft_run_tests(char *l, char *a, char *b)
 {
-	ft_print_header("LIBASM TESTER BY YSOROKO");
+	ft_print_header("LIBASM BY YSOROKO");
 	ft_strlen_tests(l, a, b);
 	ft_strcmp_tests(l, a, b);
 	ft_strcpy_tests(l, a, b);
