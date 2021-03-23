@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/23 13:44:47 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/23 17:59:20 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,49 @@ static void	ft_print_end_line(void)
 	printf(COLOR_RESET);
 }
 
+/*
+** FT_INITIALIZE
+** This function is used to initialize 
+*/
+
+static void	ft_initialize(char **a, char **b, char **c, char **d)
+{
+	if (a)
+		*a = 0;
+	if (b)
+		*b = 0;
+	if (c)
+		*c = 0;
+	if (d)
+		*d = 0;
+}
+
+/*
+** FT_FREE
+** This function is used to free several strings and exit if required
+** It is usually called when an error occurs
+*/
+
+static void	ft_free(char *a, char *b, char *c, char *d, int ex)
+{
+	if (a)
+		free(a);
+	if (b)
+		free(b);
+	if (c)
+		free(c);
+	if (d)
+		free(d);
+	if (ex)
+		exit(EXIT_FAILURE);
+}
+
+/*
+** FT_COMPARE_RESULTS
+** This funcion compares ints or chars depending on the first argument
+** Then it calls ft_print_result which prints green [OK] or red [KO] on screen
+*/
+
 static void	ft_compare_results(char *type, char *a, char *b, int c, int d)
 {
 	if (!strcmp(type, "string"))
@@ -108,8 +151,9 @@ static void	ft_strlen_tests(char *l, char *a, char *b)
 	char	*x;
 	char	*y;
 
+	ft_initialize(&x, &y, 0, 0);
 	if (!(x = strdup("strlen: ")) || !(y = strdup("ft_strlen: ")))
-		exit(EXIT_FAILURE);
+		ft_free(x, y, 0, 0, 1);
 	ft_print_function_start("FT_STRLEN");
 	s = strlen("");
 	f = ft_strlen("");
@@ -142,8 +186,9 @@ static void	ft_strcmp_tests(char *l, char *a, char *b)
 	char	*x;
 	char	*y;
 
+	ft_initialize(&x, &y, 0, 0);
 	if (!(x = strdup("strcmp: ")) || !(y = strdup("ft_strcmp: ")))
-		exit(EXIT_FAILURE);
+		ft_free(x, y, 0, 0, 1);
 	ft_print_function_start("FT_STRCMP");
 	s = strcmp("", "");
 	f = ft_strcmp("", "");
@@ -186,8 +231,7 @@ static void	ft_strcmp_tests(char *l, char *a, char *b)
 	printf("%-15s %-9s [%5d] %-9s [%5d]", "[o_O][!]:", x, s, y, f);
 	ft_compare_results("int", 0, 0, s, f);
 	ft_print_end_line();
-	free(x);
-	free(y);
+	ft_free(x, y, 0, 0, 0);
 }
 
 /*
@@ -201,9 +245,10 @@ static void	ft_strcpy_tests(char *l, char *a, char *b)
 	char	*x;
 	char	*y;
 
+	ft_initialize(&x, &y, &s, &f);
 	if (!(s = malloc(10000)) || !(f = malloc(10000)) ||
 		(!(x = strdup("strcpy: "))) || (!(y = strdup("ft_strcpy: "))))
-		exit(EXIT_FAILURE);
+		ft_free(s, f, x, y, 1);
 	ft_print_function_start("FT_STRCPY");
 	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[EMPTY]:", x, strcpy(s, ""),
 														y, ft_strcpy(f, ""));
@@ -218,10 +263,7 @@ static void	ft_strcpy_tests(char *l, char *a, char *b)
 														y, ft_strcpy(f, l));
 	ft_compare_results("string", s, f, 0, 0);
 	ft_print_end_line();
-	free(s);
-	free(f);
-	free(x);
-	free(y);
+	ft_free(s, f, x, y, 0);
 }
 
 /*
@@ -235,12 +277,11 @@ static void	ft_strdup_tests(char *l, char *a, char *b)
 	char	*x;
 	char	*y;
 
-	if ((!(x = strdup("strdup: "))) || (!(y = strdup("ft_strdup: "))))
-		exit(EXIT_FAILURE);
+	ft_initialize(&x, &y, &s, &f);
+	if ((!(x = strdup("strdup: "))) || !(y = strdup("ft_strdup: "))
+			|| !(s = strdup("")) || !((f = ft_strdup(""))))
+		ft_free(x, y, s, f, 1);
 	ft_print_function_start("FT_STRDUP");
-	if (!(s = strdup("")) || !((f = ft_strdup(""))))
-		return ;
-	f = ft_strdup("");
 	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[EMPTY]:", x, s, y, f);
 	ft_compare_results("string", s, f, 0, 0);
 	free(s);
@@ -278,28 +319,21 @@ static void	ft_write_tests(char *l)
 	int		f_fd;
 	char	*x;
 	char	*y;
-	char	*s;
-	char	*f;
 	size_t	s_ret;
 	size_t	f_ret;
 
+	ft_initialize(&x, &y, 0, 0);
 	ft_print_function_start("FT_WRITE");
 	if ((s_fd = open("write", O_CREAT | O_RDWR | O_TRUNC, 77777)) == -1)
 		return ;
 	if ((f_fd = open("ft_write", O_CREAT | O_RDWR | O_TRUNC, 77777)) == -1)
 		return ;
-	if (!(s = malloc(1000)) || !(f = malloc(1000)) ||
-		(!(x = strdup("write: "))) || (!(y = strdup("ft_write: "))))
-		return ;
+	if (!(x = strdup("write: ")) || (!(y = strdup("ft_write: "))))
+		ft_free(x, y, 0, 0, 1);
 	s_ret = write(s_fd, l, strlen(l));
-	read(s_fd, s, strlen(l));
-	s[strlen(l) + 1] = 0;
-	f_ret = write(f_fd, l, strlen(l));
-	read(f_fd, f, strlen(l));
-	f[strlen(l) + 1] = 0;
+	f_ret = ft_write(f_fd, l, strlen(l));
 	printf("%-15s %-9s [%5li] %-9s [%5li]", "[LONG][FD OK]:", x, s_ret, y, f_ret);
 	ft_compare_results("int", 0, 0, s_ret, f_ret);
-
 	s_ret = write(-3, "ok", 2);
 	f_ret = ft_write(-3, "ok", 2);
 	printf("%-15s %-9s [%5li] %-9s [%5li]", "[WRONG FD]:", x, s_ret, y, f_ret);
@@ -312,12 +346,70 @@ static void	ft_write_tests(char *l)
 	f_ret = ft_write(0, "I", 1);
 	printf("%-13s %-9s [%5li] %-9s [%5li]", "[INPUT FD]:", x, s_ret, y, f_ret);
 	ft_compare_results("int", 0, 0, s_ret, f_ret);
-	free(s);
-	free(f);
+	ft_free(x, y, 0, 0, 0);
 	close(s_fd);
 	close(f_fd);
 	ft_print_end_line();
 }
+
+/*
+** FT_READ_TESTS
+** This function will call and print all the tests related to ft_write
+*/
+static void	ft_read_tests(char *l)
+{
+	int		s_fd;
+	int		f_fd;
+	char	*x;
+	char	*y;
+	char	*s;
+	char	*f;
+	size_t	s_ret;
+	size_t	f_ret;
+
+	ft_initialize(&x, &y, &s, &f);
+	ft_print_function_start("FT_WRITE");
+	if ((s_fd = open("write", O_RDONLY)) == -1)
+		return ;
+	if ((f_fd = open("ft_write", O_RDONLY)) == -1)
+		return ;
+	if (!(s = malloc(1000)) || !(f = malloc(1000)) ||
+		(!(x = strdup("read: "))) || (!(y = strdup("ft_read: "))))
+		ft_free(x, y, s, f, 1);
+
+	
+	s_ret = read(s_fd, s, strlen(l));
+	read(s_fd, s, strlen(l));
+	s[strlen(l) + 1] = 0;
+	f_ret = ft_read(f_fd, f, strlen(l));
+	read(f_fd, f, strlen(l));
+	f[strlen(l) + 1] = 0;
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[LONG][FD OK]:", x, s, y, f);
+	ft_compare_results("string", s, f, 0, 0);
+	printf("%-15s %-9s [%5li] %-9s [%5li]", "[LONG][FD OK]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	s_ret = read(-3, s, 2);
+	f_ret = ft_read(-3, f, 2);
+	printf("%-15s %-9s [%5li] %-9s [%5li]", "[WRONG FD]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	s_ret = read(1, s, 1);
+	f_ret = ft_read(1, f, 1);
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[OUTPUT FD]:", x, s, y, f);
+	ft_compare_results("string", s, f, 0, 0);
+	printf("%-13s %-9s [%5li] %-9s [%5li]", "[OUTPUT FD]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	s_ret = read(0, s, 1);
+	f_ret = read(0, f, 1);
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[INPUT FD]:", x, s, y, f);
+	ft_compare_results("string", s, f, 0, 0);
+	printf("%-13s %-9s [%5li] %-9s [%5li]", "[INPUT FD]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	ft_free(s, f, x, y, 0);
+	close(s_fd);
+	close(f_fd);
+	ft_print_end_line();
+}
+
 
 /*
 ** FT_INITIALIZE_STRINGS
@@ -361,6 +453,7 @@ static void	ft_run_tests(char *l, char *a, char *b)
 	ft_strcpy_tests(l, a, b);
 	ft_strdup_tests(l, a, b);
 	ft_write_tests(l);
+	ft_read_tests(l);
 }
 
 int			main(void)

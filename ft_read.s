@@ -3,15 +3,15 @@
 ;rsi	=	2nd argument registry (str)
 ;rdx	=	3rd argument (size)
 extern	___error
-SYS_WRITE equ 0x2000004
+SYS_READ equ 0x2000003
 
-global	_ft_write
+global	_ft_read
 
-_ft_write:
-	mov		rax, SYS_WRITE			;rax = 0x2000004, for syscall
-	syscall							;calls write function using syscall (rax is now the error number)
+_ft_read:
+	mov		rax, SYS_READ			;rax = 0x2000003, needed for syscall
+	syscall							;calls write function using syscall (rax is now error number or return value)
 	jc		_return_error			;checks the carry flag, if it's active, there has been an error (and it's stocked in rax on macOS)
-	ret								;returns rax if no error(return value of write syscall)
+	ret								;returns rax if no error(return value of read syscall)
 
 _return_error:
 	push	rax

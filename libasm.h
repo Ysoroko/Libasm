@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:24:50 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/23 11:45:17 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/23 17:58:37 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <mach/error.h>
 
 /*
 ** PROTOTYPES
@@ -30,6 +29,7 @@ int		ft_strcmp(char *a, char *b);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strdup(const char *src);
 ssize_t	ft_write(int fd, const void *str, size_t n);
+ssize_t	ft_read(int fd, const void *str, size_t n);
 
 /*
 ** COLORS
@@ -46,31 +46,3 @@ ssize_t	ft_write(int fd, const void *str, size_t n);
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
 #endif
-
-
-/*
-** CALL CONVENTIONS:
-**
-** rax ; return value
-**
-** rdi ; 1st argument
-** rsi ; 2nd argument
-** rdx ; 3rd
-** rcx ; 4th
-** r8  ; 5th
-*/
-
-/*
-** add/sub/mul/imul/div/idiv ; aritmetic (IMUL = signed, MUL = signed)
-** inc/dec ; increment/decrement
-** push ; write a value to the stack
-** pop ; restore whatever is on the top of the stack into a register
-** xchg ; exchange values of two variables
-*/
-
-/*
-** OTHER USEFUL STUFF
-** call ; calls another function (unlike jump it continues 
-**			where it left off after executing the function)
-** [ebx] ;same as *ebx in C
-*/

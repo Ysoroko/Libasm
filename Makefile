@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/17 16:15:11 by ysoroko           #+#    #+#              #
-#    Updated: 2021/03/23 13:20:10 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/03/23 17:59:28 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ SRC			=	ft_strlen.s \
 				ft_strcmp.s \
 				ft_strcpy.s \
 				ft_strdup.s \
-				ft_write.s
+				ft_write.s \
+				ft_read.s
 
 OBJS		=	$(SRC:.s=.o)
 
