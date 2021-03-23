@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/22 15:32:32 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/23 13:44:47 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,57 @@ static void	ft_strdup_tests(char *l, char *a, char *b)
 }
 
 /*
+** FT_WRITE_TESTS
+** This function will call and print all the tests related to ft_write
+*/
+static void	ft_write_tests(char *l)
+{
+	int		s_fd;
+	int		f_fd;
+	char	*x;
+	char	*y;
+	char	*s;
+	char	*f;
+	size_t	s_ret;
+	size_t	f_ret;
+
+	ft_print_function_start("FT_WRITE");
+	if ((s_fd = open("write", O_CREAT | O_RDWR | O_TRUNC, 77777)) == -1)
+		return ;
+	if ((f_fd = open("ft_write", O_CREAT | O_RDWR | O_TRUNC, 77777)) == -1)
+		return ;
+	if (!(s = malloc(1000)) || !(f = malloc(1000)) ||
+		(!(x = strdup("write: "))) || (!(y = strdup("ft_write: "))))
+		return ;
+	s_ret = write(s_fd, l, strlen(l));
+	read(s_fd, s, strlen(l));
+	s[strlen(l) + 1] = 0;
+	f_ret = write(f_fd, l, strlen(l));
+	read(f_fd, f, strlen(l));
+	f[strlen(l) + 1] = 0;
+	printf("%-15s %-9s [%5li] %-9s [%5li]", "[LONG][FD OK]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+
+	s_ret = write(-3, "ok", 2);
+	f_ret = ft_write(-3, "ok", 2);
+	printf("%-15s %-9s [%5li] %-9s [%5li]", "[WRONG FD]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	s_ret = write(1, "H", 1);
+	f_ret = ft_write(1, "I", 1);
+	printf("%-13s %-9s [%5li] %-9s [%5li]", "[OUTPUT FD]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	s_ret = write(0, "H", 1);
+	f_ret = ft_write(0, "I", 1);
+	printf("%-13s %-9s [%5li] %-9s [%5li]", "[INPUT FD]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	free(s);
+	free(f);
+	close(s_fd);
+	close(f_fd);
+	ft_print_end_line();
+}
+
+/*
 ** FT_INITIALIZE_STRINGS
 ** This function returns a malloc'd duplicate
 */
@@ -309,6 +360,7 @@ static void	ft_run_tests(char *l, char *a, char *b)
 	ft_strcmp_tests(l, a, b);
 	ft_strcpy_tests(l, a, b);
 	ft_strdup_tests(l, a, b);
+	ft_write_tests(l);
 }
 
 int			main(void)

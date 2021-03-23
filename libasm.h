@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 17:24:50 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/22 15:16:26 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/23 11:45:17 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include <stdio.h>
 # include <string.h>
 # include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <mach/error.h>
 
 /*
 ** PROTOTYPES
@@ -25,6 +29,7 @@ size_t	ft_strlen(char *str);
 int		ft_strcmp(char *a, char *b);
 char	*ft_strcpy(char *dest, char *src);
 char	*ft_strdup(const char *src);
+ssize_t	ft_write(int fd, const void *str, size_t n);
 
 /*
 ** COLORS

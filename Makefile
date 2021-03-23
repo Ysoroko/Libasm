@@ -6,14 +6,15 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/17 16:15:11 by ysoroko           #+#    #+#              #
-#    Updated: 2021/03/22 15:15:47 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/03/23 13:20:10 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC			=	ft_strlen.s \
 				ft_strcmp.s \
 				ft_strcpy.s \
-				ft_strdup.s
+				ft_strdup.s \
+				ft_write.s
 
 OBJS		=	$(SRC:.s=.o)
 
@@ -39,7 +40,7 @@ $(NAME): $(OBJS)
 		@$(LINK) $(NAME) $(OBJS)
 
 test:	$(NAME)
-		@gcc $(ASM) $(FLAGS) $(NAME) main.c && ./$(EXECUTABLE); \
+		@gcc $(ASM) $(FLAGS) $(NAME) main.c && ./$(EXECUTABLE) ; \
 		make fclean
 
 wtest: $(NAME)
@@ -50,8 +51,12 @@ clean:
 		@rm -rf $(OBJS)
 
 fclean:	clean
-		@rm -rf $(NAME)
-		@rm -rf $(EXECUTABLE)
+		@rm -rf $(NAME) \
+		@rm -rf $(EXECUTABLE) \
+
+aclean: clean
+		@rm -rf ft_write \
+		@rm -rf write
 
 re:		fclean all
 

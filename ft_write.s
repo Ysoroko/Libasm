@@ -2,26 +2,26 @@
 ;rdi	=	1st argument registry (fd)
 ;rsi	=	2nd argument registry (str)
 ;rdx	=	3rd argument (size)
-SYS_WRITE equ 1	;define a macro for SYS_WRITE
+extern	___error
+SYS_WRITE equ 0x2000004 	;#define SYS_WRITE 0x2000004
 
 global	_ft_write
 
 _ft_write:
-	call	_ft_check_for_errors	;calls ft_check_for_errors()
-	cmp		rax, -1					;if (ft_check_for_errors() == -1)
-	je		_return_minus_one		;call return_minus_one()
-	mov		rax, SYS_WRITE			;rax = 1
+	mov		rax, SYS_WRITE			;rax = 0x2000004, for syscall
+	syscall							;calls write function using syscall
+	;jc		_return_error
+	ret								;returns rax(return value of write syscall)
 
-
-_ft_check_for_errors:
-	cmp		rdi, 0
-	jl		_return_minus_one
-	cmp		rsi, 0
-	jl		_return_minus_one
-	cmp		rdx, 0
-	jl		_return_minus_one
 
 _return_minus_one:
 	xor		rax,rax
 	dec		rax
+	ret
+
+_return_error:
+	mov		r8, rax
+	mov		[rax], r8
+	call	___error
+	mov		rax, -1
 	ret
