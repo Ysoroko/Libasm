@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/24 12:30:34 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/24 14:28:58 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,7 +337,7 @@ static void	ft_write_tests(char *l)
 	if ((f_fd = open("ft_write", O_CREAT | O_RDWR | O_TRUNC, 77777)) == -1)
 		return ;
 	if (!(s = malloc(1000)) || !(f = malloc(1000)) ||
-		(!(x = strdup("read: "))) || (!(y = strdup("ft_read: "))))
+		(!(x = strdup("write: "))) || (!(y = strdup("ft_write: "))))
 		ft_free(x, y, s, f, 1);
 	s_ret = write(s_fd, l, strlen(l));
 	lseek(s_fd, 0, SEEK_SET);
