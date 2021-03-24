@@ -12,7 +12,7 @@ _ft_strlen:
 	xor		rax, rax				;rax = 0
 	cmp		rdi, 0					;compare the argument to a NULL pointer
 	je		_null_string			;if the argument is a NULL pointer, jump to null_string function
-	call	_count					;call count function
+	jmp		_count					;call count function
 
 _count:
 	cmp		[rdi + rax], byte 0		;compare str[i] to '\0'
