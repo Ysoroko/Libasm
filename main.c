@@ -6,15 +6,15 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/24 11:57:26 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/24 12:23:22 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
 
 /*
-** FT_PRINT_HEADE
-** Simply prints the "LIBASM TESTER" header
+** FT_PRINT_HEADER
+** Simply prints the header with the argument string in the middle
 */
 
 static void	ft_print_header(const char *f)
@@ -48,6 +48,12 @@ static void	ft_print_function_start(const char *f)
 	printf("------------------------\n\n");
 	printf(COLOR_RESET);
 }
+
+/*
+** FT_PRINT_RESULT
+** This function will print a green [OK] or a red [KO]
+** depending on its argument
+*/
 
 static void	ft_print_result(int n)
 {
@@ -238,6 +244,7 @@ static void	ft_strcmp_tests(char *l, char *a, char *b)
 ** FT_STRCPY_TESTS
 ** This function will call and print all the tests related to ft_strcpy
 */
+
 static void	ft_strcpy_tests(char *l, char *a, char *b)
 {
 	char	*s;
@@ -270,6 +277,7 @@ static void	ft_strcpy_tests(char *l, char *a, char *b)
 ** FT_STRDUP_TESTS
 ** This function will call and print all the tests related to ft_strdup
 */
+
 static void	ft_strdup_tests(char *l, char *a, char *b)
 {
 	char	*s;
@@ -284,35 +292,30 @@ static void	ft_strdup_tests(char *l, char *a, char *b)
 	ft_print_function_start("FT_STRDUP");
 	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[EMPTY]:", x, s, y, f);
 	ft_compare_results("string", s, f, 0, 0);
-	free(s);
-	free(f);
+	ft_free(s, f, 0, 0, 0);
 	if (!(s = strdup(b)) || !((f = ft_strdup(b))))
 		return ;
 	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[o_O]:", x, s, y, f);
 	ft_compare_results("string", s, f, 0, 0);
-	free(s);
-	free(f);
+	ft_free(s, f, 0, 0, 0);
 	if (!(s = strdup(a)) || !((f = ft_strdup(a))))
 		return ;
 	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[!]:", x, s, y, f);
 	ft_compare_results("string", s, f, 0, 0);
-	free(s);
-	free(f);
+	ft_free(s, f, 0, 0, 0);
 	if (!(s = strdup(l)) || !((f = ft_strdup(l))))
 		return ;
 	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[LONG]:", x, s, y, f);
 	ft_compare_results("string", s, f, 0, 0);
 	ft_print_end_line();
-	free(s);
-	free(f);
-	free(x);
-	free(y);
+	ft_free(s, f, x, y, 0);
 }
 
 /*
 ** FT_WRITE_TESTS
 ** This function will call and print all the tests related to ft_write
 */
+
 static void	ft_write_tests(char *l)
 {
 	int		s_fd;
@@ -373,6 +376,7 @@ static void	ft_write_tests(char *l)
 ** FT_READ_TESTS
 ** This function will call and print all the tests related to ft_read
 */
+
 static void	ft_read_tests(char *l)
 {
 	int		s_fd;
@@ -435,7 +439,6 @@ static void	ft_read_tests(char *l)
 	ft_print_end_line();
 }
 
-
 /*
 ** FT_INITIALIZE_STRINGS
 ** This function returns a malloc'd duplicate
@@ -470,6 +473,11 @@ static void	ft_initialize_strings(char **l_str, char **str_a, char **str_b)
 		}
 }
 
+/*
+** FT_RUN_TESTS
+** This function runs all the tests one by one
+*/
+
 static void	ft_run_tests(char *l, char *a, char *b)
 {
 	ft_print_header("LIBASM BY YSOROKO");
@@ -490,5 +498,6 @@ int			main(void)
 	ft_initialize_strings(&long_string, &str_a, &str_b);
 	ft_run_tests(long_string, str_a, str_b);
 	ft_free(long_string, str_a, str_b, 0, 0);
+	printf("\n\n\n");
 	return (1);
 }
