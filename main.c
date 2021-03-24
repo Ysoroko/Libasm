@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/24 12:23:22 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/24 12:30:34 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ static void	ft_strlen_tests(char *l, char *a, char *b)
 	printf("%-15s %-9s [%5lu] %-9s [%5lu]", "[LONG]:", x, s, y, f);
 	ft_compare_results("int", 0, 0, s, f);
 	ft_print_end_line();
+	ft_free(x, y, 0, 0, 0);
 }
 
 /*
@@ -446,6 +447,7 @@ static void	ft_read_tests(char *l)
 
 static void	ft_initialize_strings(char **l_str, char **str_a, char **str_b)
 {
+	ft_initialize(l_str, str_a, str_b, 0);
 	if (!(*l_str = strdup("Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
 					Sed non risus. Suspendisse lectus tortor \
 					,dignissim sit amet, adipiscing nec, ultricies sed, dolor \
@@ -469,7 +471,7 @@ static void	ft_initialize_strings(char **l_str, char **str_a, char **str_b)
 					Maecenas adipiscing ante non diam sodales hendrerit.")) ||
 		!(*str_a = strdup("!")) || !(*str_b = strdup("o_O")))
 		{
-			exit(EXIT_FAILURE);
+			ft_free(*l_str, *str_a, *str_b, 0, 1);
 		}
 }
 
@@ -482,11 +484,11 @@ static void	ft_run_tests(char *l, char *a, char *b)
 {
 	ft_print_header("LIBASM BY YSOROKO");
 	ft_strlen_tests(l, a, b);
-	ft_strcmp_tests(l, a, b);
 	ft_strcpy_tests(l, a, b);
-	ft_strdup_tests(l, a, b);
+	ft_strcmp_tests(l, a, b);
 	ft_write_tests(l);
 	ft_read_tests(l);
+	ft_strdup_tests(l, a, b);
 }
 
 int			main(void)
