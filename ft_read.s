@@ -1,4 +1,4 @@
-;ssize_t write(int fd, const void *str, size_t n);
+;ssize_t read(int fd, const void *str, size_t n);
 ;rdi	=	1st argument registry (fd)
 ;rsi	=	2nd argument registry (str)
 ;rdx	=	3rd argument (size)
@@ -9,7 +9,7 @@ global	_ft_read
 
 _ft_read:
 	mov		rax, SYS_READ			;rax = 0x2000003, needed for syscall
-	syscall							;calls write function using syscall (rax becomes the error number or return value after syscall)
+	syscall							;calls read function using syscall (rax becomes the error number or return value after syscall)
 	jc		_return_error			;checks the carry flag, if it's active, there has been an error (and it's stocked in rax on macOS)
 	ret								;returns rax if no error(return value of read syscall)
 
