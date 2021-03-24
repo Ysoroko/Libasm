@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/17 16:15:11 by ysoroko           #+#    #+#              #
-#    Updated: 2021/03/23 18:03:58 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/03/24 12:13:11 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ ASM			=	-L. -lasm
 
 EXECUTABLE	=	a.out
 
+# Compiles using NASM with macho64 output format (format used by macOS)
 COMPILE		=	nasm -f macho64
 
 # Rule to compile .s files into .o files
@@ -40,10 +41,12 @@ all: $(NAME)
 $(NAME): $(OBJS)
 		@$(LINK) $(NAME) $(OBJS)
 
+# Rule used to compile the libasm library with main.c and launch the tests
 test:	$(NAME)
 		@gcc $(ASM) $(FLAGS) $(NAME) main.c && ./$(EXECUTABLE) ; \
 		make fclean
 
+# Rule used to compile the libasm library with main.c and launch the tests without warnings
 wtest: $(NAME)
 		gcc $(ASM) $(NAME) main.c && ./$(EXECUTABLE); \
 		make fclean
@@ -59,6 +62,6 @@ aclean: fclean
 		@rm -rf ft_write \
 		@rm -rf write
 
-re:		fclean all
+re:		aclean all
 
 .PHONY: all clean fclean re test
