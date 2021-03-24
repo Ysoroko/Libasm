@@ -15,7 +15,7 @@ My own unit test is used to:
 ### Try it:
 #### ⚠️ Requires nasm compiler installed and macOS x64 Intel processor architecture
 #### ⌨ Just download the project and run "Make test" in your terminal
-#### ℹ️ The tester will wait for input after "ft_read" part. Input 2 same strings (under 10 characters), the result should say "[OK]"
+#### ℹ️ The tester will wait for input after "ft_read" part (written characters in terminal will turn green). Input 2 **same** strings (under 10 characters), the result should say "[OK]"
 <br/>
 
 ### Use my Unit Test for this project:
