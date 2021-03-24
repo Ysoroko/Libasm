@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:47:59 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/03/23 18:04:37 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/03/24 11:57:26 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,49 +317,8 @@ static void	ft_write_tests(char *l)
 {
 	int		s_fd;
 	int		f_fd;
-	char	*x;
-	char	*y;
-	size_t	s_ret;
-	size_t	f_ret;
-
-	ft_initialize(&x, &y, 0, 0);
-	ft_print_function_start("FT_WRITE");
-	if ((s_fd = open("write", O_CREAT | O_RDWR | O_TRUNC, 77777)) == -1)
-		return ;
-	if ((f_fd = open("ft_write", O_CREAT | O_RDWR | O_TRUNC, 77777)) == -1)
-		return ;
-	if (!(x = strdup("write: ")) || (!(y = strdup("ft_write: "))))
-		ft_free(x, y, 0, 0, 1);
-	s_ret = write(s_fd, l, strlen(l));
-	f_ret = ft_write(f_fd, l, strlen(l));
-	printf("%-15s %-9s [%5li] %-9s [%5li]", "[LONG][FD OK]:", x, s_ret, y, f_ret);
-	ft_compare_results("int", 0, 0, s_ret, f_ret);
-	s_ret = write(-3, "ok", 2);
-	f_ret = ft_write(-3, "ok", 2);
-	printf("%-15s %-9s [%5li] %-9s [%5li]", "[WRONG FD]:", x, s_ret, y, f_ret);
-	ft_compare_results("int", 0, 0, s_ret, f_ret);
-	s_ret = write(1, "H", 1);
-	f_ret = ft_write(1, "I", 1);
-	printf("%-13s %-9s [%5li] %-9s [%5li]", "[OUTPUT FD]:", x, s_ret, y, f_ret);
-	ft_compare_results("int", 0, 0, s_ret, f_ret);
-	s_ret = write(0, "H", 1);
-	f_ret = ft_write(0, "I", 1);
-	printf("%-13s %-9s [%5li] %-9s [%5li]", "[INPUT FD]:", x, s_ret, y, f_ret);
-	ft_compare_results("int", 0, 0, s_ret, f_ret);
-	ft_free(x, y, 0, 0, 0);
-	close(s_fd);
-	close(f_fd);
-	ft_print_end_line();
-}
-
-/*
-** FT_READ_TESTS
-** This function will call and print all the tests related to ft_write
-*/
-static void	ft_read_tests(char *l)
-{
-	int		s_fd;
-	int		f_fd;
+	int		s_err;
+	int		f_err;
 	char	*x;
 	char	*y;
 	char	*s;
@@ -369,40 +328,106 @@ static void	ft_read_tests(char *l)
 
 	ft_initialize(&x, &y, &s, &f);
 	ft_print_function_start("FT_WRITE");
-	if ((s_fd = open("write", O_RDONLY)) == -1)
+	if ((s_fd = open("write", O_CREAT | O_RDWR | O_TRUNC, 77777)) == -1)
 		return ;
-	if ((f_fd = open("ft_write", O_RDONLY)) == -1)
+	if ((f_fd = open("ft_write", O_CREAT | O_RDWR | O_TRUNC, 77777)) == -1)
 		return ;
 	if (!(s = malloc(1000)) || !(f = malloc(1000)) ||
 		(!(x = strdup("read: "))) || (!(y = strdup("ft_read: "))))
 		ft_free(x, y, s, f, 1);
+	s_ret = write(s_fd, l, strlen(l));
+	lseek(s_fd, 0, SEEK_SET);
+	s_err = (int)read(s_fd, s, strlen(l));
+	s[s_err] = 0;
+	f_ret = ft_write(f_fd, l, strlen(l));
+	lseek(f_fd, 0, SEEK_SET);
+	f_err = (int)read(f_fd, f, strlen(l));
+	f[f_err] = 0;
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[LONG][FD OK]:", x, s, y, f);
+	ft_compare_results("string", s, f, 0, 0);
+	printf("%-15s %-9s [%5li] %-9s [%5li]", "[LONG][FD OK]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	s_ret = write(-3, "ok", 2);
+	s_err = errno;
+	f_ret = ft_write(-3, "ok", 2);
+	f_err = errno;
+	printf("%-15s %-9s [%5li] %-9s [%5li]", "[WRONG FD]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[ERRNO]:", x, s_err, y, f_err);
+	ft_compare_results("int", 0, 0, s_err, f_err);
+	s_ret = write(1, "H", 1);
+	f_ret = ft_write(1, "I", 1);
+	printf("%-13s %-9s [%5li] %-9s [%5li]", "[OUTPUT FD]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	s_ret = write(0, "H", 1);
+	f_ret = ft_write(0, "I", 1);
+	printf("%-13s %-9s [%5li] %-9s [%5li]", "[INPUT FD]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	ft_free(x, y, s, f, 0);
+	close(s_fd);
+	close(f_fd);
+	ft_print_end_line();
+}
 
-	
+/*
+** FT_READ_TESTS
+** This function will call and print all the tests related to ft_read
+*/
+static void	ft_read_tests(char *l)
+{
+	int		s_fd;
+	int		f_fd;
+	int		s_err;
+	int		f_err;
+	char	*x;
+	char	*y;
+	char	*s;
+	char	*f;
+	size_t	s_ret;
+	size_t	f_ret;
+
+	ft_initialize(&x, &y, &s, &f);
+	ft_print_function_start("FT_READ");
+	if ((s_fd = open("write", O_RDWR)) == -1)
+		return ;
+	if ((f_fd = open("ft_write", O_RDWR)) == -1)
+		return ;
+	if (!(s = malloc(1000)) || !(f = malloc(1000)) ||
+		(!(x = strdup("read: "))) || (!(y = strdup("ft_read: "))))
+		ft_free(x, y, s, f, 1);
 	s_ret = read(s_fd, s, strlen(l));
-	read(s_fd, s, strlen(l));
-	s[strlen(l) + 1] = 0;
+	s[s_ret] = 0;
+	lseek(s_fd, 0, SEEK_SET);
 	f_ret = ft_read(f_fd, f, strlen(l));
-	read(f_fd, f, strlen(l));
-	f[strlen(l) + 1] = 0;
+	f[f_ret] = 0;
+	lseek(f_fd, 0, SEEK_SET);
 	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[LONG][FD OK]:", x, s, y, f);
 	ft_compare_results("string", s, f, 0, 0);
 	printf("%-15s %-9s [%5li] %-9s [%5li]", "[LONG][FD OK]:", x, s_ret, y, f_ret);
 	ft_compare_results("int", 0, 0, s_ret, f_ret);
 	s_ret = read(-3, s, 2);
+	s_err = errno;
 	f_ret = ft_read(-3, f, 2);
+	f_err = errno;
 	printf("%-15s %-9s [%5li] %-9s [%5li]", "[WRONG FD]:", x, s_ret, y, f_ret);
 	ft_compare_results("int", 0, 0, s_ret, f_ret);
-	s_ret = read(1, s, 1);
-	f_ret = ft_read(1, f, 1);
-	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[OUTPUT FD]:", x, s, y, f);
-	ft_compare_results("string", s, f, 0, 0);
-	printf("%-13s %-9s [%5li] %-9s [%5li]", "[OUTPUT FD]:", x, s_ret, y, f_ret);
-	ft_compare_results("int", 0, 0, s_ret, f_ret);
-	s_ret = read(0, s, 1);
-	f_ret = read(0, f, 1);
+	printf("%-15s %-9s [%5d] %-9s [%5d]", "[ERRNO]:", x, s_err, y, f_err);
+	ft_compare_results("int", 0, 0, s_err, f_err);
+	s_ret = read(0, s, 10);
+	lseek(0, 0, SEEK_SET);
+	f_ret = ft_read(0, f, 10);
+	lseek(0, 0, SEEK_SET);
 	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[INPUT FD]:", x, s, y, f);
 	ft_compare_results("string", s, f, 0, 0);
-	printf("%-13s %-9s [%5li] %-9s [%5li]", "[INPUT FD]:", x, s_ret, y, f_ret);
+	printf("%-15s %-9s [%5li] %-9s [%5li]", "[INPUT FD]:", x, s_ret, y, f_ret);
+	ft_compare_results("int", 0, 0, s_ret, f_ret);
+	s_ret = read(1, s, 10);
+	lseek(1, 0, SEEK_SET);
+	f_ret = ft_read(1, f, 10);
+	lseek(1, 0, SEEK_SET);
+	printf("%-15s %-9s [%5.5s] %-9s [%5.5s]", "[OUTPUT FD]:", x, s, y, f);
+	ft_compare_results("string", s, f, 0, 0);
+	printf("%-15s %-9s [%5li] %-9s [%5li]", "[OUTPUT FD]:", x, s_ret, y, f_ret);
 	ft_compare_results("int", 0, 0, s_ret, f_ret);
 	ft_free(s, f, x, y, 0);
 	close(s_fd);
@@ -464,5 +489,6 @@ int			main(void)
 
 	ft_initialize_strings(&long_string, &str_a, &str_b);
 	ft_run_tests(long_string, str_a, str_b);
+	ft_free(long_string, str_a, str_b, 0, 0);
 	return (1);
 }
