@@ -8,7 +8,7 @@ Compiled using nasm with macho64 output format on MacOS.
 My own unit test is used to:
 - Compare the results of newly coded functions vs already existing C functions
 - Checking that the functions set up the global variable "errno" accordingly after failed syscalls
-- Checking that the strings are modified correctly when using "write" and "read" functions
+- Checking that the buffer strings are used correctly when using "write" and "read" functions
 - Checks the input / output file descriptors with write and read functions
 <br/>
 
